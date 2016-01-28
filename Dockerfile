@@ -1,17 +1,10 @@
-FROM            ubuntu:12.04
-MAINTAINER      James Sharp <james@ortootech.com>
-
-RUN        echo 'deb http://archive.ubuntu.com/ubuntu precise main universe' > /etc/apt/sources.list
-RUN        apt-get update
-
-# Install nginx
-RUN        apt-get install -y -q nginx
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+FROM            nginx:1.9
+MAINTAINER      Joel Salas <joel.salas@hautelook.com>
 
 # Expose port 80
 EXPOSE 80
 
-CMD ["nginx"]
+CMD ["nginx", "-g", "daemon off;"]
 
 # Add in the config
-ADD default /etc/nginx/sites-available/default
+COPY redirect.conf /etc/nginx/conf.d/default.conf
